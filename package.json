@@ -1,21 +1,22 @@
 {
   "name": "eco-spark-hub",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Eco Spark Hub Backend Server",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
+    "postinstall": "prisma generate",
     "start": "node dist/server.js",
     "seed": "ts-node src/app/prisma/seed.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Md. Kamruzzaman",
   "license": "ISC",
   "type": "commonjs",
   "prisma": {
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/app/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.0",
