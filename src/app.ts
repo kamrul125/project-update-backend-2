@@ -1,10 +1,11 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import router from './routes'; // আপনার index.ts ফাইলটি ইম্পোর্ট করুন
+import router from './routes'; 
 import globalErrorHandler from './errors/globalErrorHandler';
 
 const app: Application = express();
 
+// CORS কনফিগারেশন: আপনার ফ্রন্টএন্ড ৩০০০ পোর্টে চলছে তাই এটি ঠিক আছে
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -16,6 +17,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 app.use(express.json());
 
 // API রাউট রেজিস্টার
