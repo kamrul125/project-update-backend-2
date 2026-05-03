@@ -6,6 +6,8 @@ export const createIdea = async (userId: string, data: any) => {
     data: {
       title: data.title,
       description: data.description,
+      problem: data.problem || "No problem stated",   // Prisma এরর দূর করতে যোগ করা হয়েছে
+      solution: data.solution || "No solution stated", // Prisma এরর দূর করতে যোগ করা হয়েছে
       categoryId: data.categoryId, 
       authorId: userId,           
       status: "DRAFT",
@@ -64,6 +66,8 @@ export const updateIdea = async (userId: string, ideaId: string, data: any) => {
     data: {
         title: data.title,
         description: data.description,
+        problem: data.problem,   // আপডেট করার সুবিধার্থে যোগ করা হয়েছে
+        solution: data.solution, // আপডেট করার সুবিধার্থে যোগ করা হয়েছে
         price: data.price,
         isPaid: data.isPaid,
         categoryId: data.categoryId
