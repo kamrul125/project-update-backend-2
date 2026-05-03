@@ -1,35 +1,44 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import router from './routes'; 
+import router from './routes';
 import globalErrorHandler from './errors/globalErrorHandler';
 
 const app: Application = express();
 
-// CORS কনফিগারেশন আপডেট করা হয়েছে
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://192.168.0.102:3000',
-    'http://192.168.0.102:3001',
-    'https://project-update-frontend.vercel.app', // আপনার লাইভ ফ্রন্টএন্ড ডোমেইন এখানে যোগ করা হয়েছে ✅
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://project-update-frontend.vercel.app',
+];
+
+// ✅ CORS SAFE CONFIG
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
+
+// ✅ IMPORTANT: preflight safe (NO '*')
+app.options(/.*/, cors());
 
 app.use(express.json());
 
-// API রাউট রেজিস্টার
+// routes
 app.use('/api/v1', router);
 
-// স্বাস্থ্য পরীক্ষা রুট
+// health check
 app.get('/', (req: Request, res: Response) => {
   res.send('Eco Spark Hub Server Running 🚀');
 });
 
-// ৪-০৪ রাউট
+// 404 handler (NO '*' EVER)
 app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
@@ -37,7 +46,7 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// গ্লোবাল এরর হ্যান্ডলার
+// global error
 app.use(globalErrorHandler);
 
 export default app;
