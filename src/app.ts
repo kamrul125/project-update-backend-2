@@ -5,13 +5,14 @@ import globalErrorHandler from './errors/globalErrorHandler';
 
 const app: Application = express();
 
-// CORS কনফিগারেশন: আপনার ফ্রন্টএন্ড ৩০০০ পোর্টে চলছে তাই এটি ঠিক আছে
+// CORS কনফিগারেশন আপডেট করা হয়েছে
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
     'http://192.168.0.102:3000',
     'http://192.168.0.102:3001',
+    'https://project-update-frontend.vercel.app', // আপনার লাইভ ফ্রন্টএন্ড ডোমেইন এখানে যোগ করা হয়েছে ✅
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
