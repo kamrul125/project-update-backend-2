@@ -1,6 +1,7 @@
 import { prisma } from "../../../config/prisma";
 
-const getMyProfile = async (userId: string) => {
+// নির্দিষ্ট ইউজারের প্রোফাইল দেখার ফাংশন
+export const getMyProfile = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -22,7 +23,8 @@ const getMyProfile = async (userId: string) => {
   return user;
 };
 
-const getAllUsers = async (page = 1, limit = 20, role?: string) => {
+// সকল ইউজারের লিস্ট দেখার ফাংশন (Pagination সহ)
+export const getAllUsers = async (page = 1, limit = 20, role?: string) => {
   const where: any = {};
   if (role) where.role = role;
 
@@ -51,9 +53,4 @@ const getAllUsers = async (page = 1, limit = 20, role?: string) => {
     totalPages,
     currentPage,
   };
-};
-
-export const userService = {
-  getMyProfile,
-  getAllUsers,
 };
