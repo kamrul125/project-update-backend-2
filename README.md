@@ -61,7 +61,7 @@ src/
 ### 1️⃣ Clone the repository
 
 ```
-git clone https://github.com/your-username/eco-spark-hub.git
+git clone https://github.com/kamrul125/project-update-backend-2
 cd eco-spark-hub
 ```
 
