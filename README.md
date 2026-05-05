@@ -4,6 +4,11 @@ A full-featured backend API for an idea-sharing platform where users can submit 
 
 ---
 
+User Email : test1@gmail.com
+ Password : 123456
+ Admin Email: admin@gmail.com
+ Password : admin123456
+
 ## 🚀 Live Features
 
 * 🔐 Authentication & Authorization (JWT + Role based)
