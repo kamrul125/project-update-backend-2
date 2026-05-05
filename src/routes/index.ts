@@ -1,6 +1,4 @@
 import { Router } from "express";
-
-// @/ এর বদলে সরাসরি পাথ ব্যবহার করে দেখুন ✅
 import authRoutes from "../app/modules/auth/auth.route";
 import ideaRoutes from "../app/modules/idea/idea.route";
 import categoryRoutes from "../app/modules/category/category.route";

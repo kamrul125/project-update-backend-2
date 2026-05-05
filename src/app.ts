@@ -5,40 +5,31 @@ import globalErrorHandler from './errors/globalErrorHandler';
 
 const app: Application = express();
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://project-update-frontend.vercel.app',
-];
-
-// ✅ CORS SAFE CONFIG
+// ✅ পরিষ্কার এবং নিরাপদ CORS কনফিগারেশন
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://project-update-frontend.vercel.app',
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 
-// ✅ IMPORTANT: preflight safe (NO '*')
-app.options(/.*/, cors());
-
 app.use(express.json());
 
-// routes
+// Routes মাউন্ট করা হচ্ছে
 app.use('/api/v1', router);
 
-// health check
+// সার্ভার স্ট্যাটাস চেক
 app.get('/', (req: Request, res: Response) => {
   res.send('Eco Spark Hub Server Running 🚀');
 });
 
-// 404 handler (NO '*' EVER)
+// ✅ ৪-০৪ হ্যান্ডলার (ওয়াইল্ডকার্ড এরর এড়াতে শুধু app.use ব্যবহার করুন)
 app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
@@ -46,7 +37,7 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// global error
+// গ্লোবাল এরর হ্যান্ডলার
 app.use(globalErrorHandler);
 
 export default app;
